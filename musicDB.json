@@ -1,0 +1,14 @@
+{
+    "cifras": [
+      {
+        "id": 1,
+        "title": "A Terra Clama",
+        "tom": "C",
+        "intro": "",
+        "verso": ["F", "G", "Am", "Em"],
+        "refrao": ["F", "G", "Am", "Em"],
+        "ponte": ["F", "G", "Am", "Em"]
+      }
+    ]
+  }
+  
