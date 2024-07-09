@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Cifra from './Component/Cifra/Cifra'
 import Home from './Home'
@@ -6,9 +5,7 @@ import { CifraProvider } from './ContextApi/CifraContext'
 import NewCifra from './Component/NewCifra/NewCifra'
 import EditCifra from './Component/EditCifra/EditCifra'
 
-type Props = {}
-
-const Router = (props: Props) => {
+const Router = () => {
     return (
         <CifraProvider>
             <BrowserRouter>

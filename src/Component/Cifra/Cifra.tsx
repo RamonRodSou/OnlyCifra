@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import { Box, Container, Typography } from '@mui/material'
 import { ICifra } from '../../Interface/ICifra'
 import BackPage from '../BackPage/BackPage'
