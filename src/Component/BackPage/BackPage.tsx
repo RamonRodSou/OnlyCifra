@@ -1,19 +1,22 @@
+import { Box } from '@mui/material'
+import iconBack from '../../assets/icon/icon-back.png'
 
 type Props = {
-    children: string
+    icon?: boolean,
+    children?: string
 }
 
-
 const BackPage = (props: Props) => {
-
     function backPage() {
         window.history.back()
     }
 
     return (
-        <>
-             <span onClick={backPage}>{props.children}</span>
-        </>
+
+        <Box onClick={backPage} sx={{ margin: '0 -1rem' }}>
+            {props.icon && <img src={iconBack} alt="Botão voltar para página inicial" style={{ marginRight: '0.5rem' }} />}
+            {props.children}
+        </Box>
     )
 }
 

@@ -26,6 +26,7 @@ const styleIconDel = {
 const RegistrarCifra = () => {
   const [title, setTitle] = useState<string>('')
   const [tom, setTom] = useState<string>('')
+  const [singer, setSinger] = useState<string>('')
   const [struct, setStruct] = useState<IStruct[]>([{ section: '', content: [''] }])
 
   const handleStructChange = (index: number, key: keyof IStruct, value: string) => {
@@ -56,6 +57,7 @@ const RegistrarCifra = () => {
       })
       setTitle('')
       setTom('')
+      setSinger('')
       setStruct([{ section: '', content: [' '] }])
     } catch (error) {
       console.error('Error registering cifra:', error)
@@ -82,6 +84,15 @@ const RegistrarCifra = () => {
             label="Tom"
             value={tom}
             onChange={(e) => setTom(e.target.value)}
+            fullWidth
+            required
+          />
+        </Box>
+        <Box marginBottom="1rem">
+          <TextField
+            label="Quem Canta?"
+            value={singer}
+            onChange={(e) => setSinger(e.target.value)}
             fullWidth
             required
           />
@@ -114,11 +125,10 @@ const RegistrarCifra = () => {
         </Button>
         <Box marginTop="2rem" display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
           <Button type="submit" variant="contained" color="info">
-            Salvar
+          <BackPage icon={false} children='Salvar' />
           </Button>
           <Button type="submit" variant="contained" color="error">
-            <BackPage children='Cancelar' />
-
+            <BackPage icon={false} children='Cancelar' />
           </Button>
         </Box>
       </form>

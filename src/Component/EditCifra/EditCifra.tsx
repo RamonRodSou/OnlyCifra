@@ -14,16 +14,16 @@ const styleForm = {
     backgroundColor: 'var(--backGound-color)',
     padding: '1.5rem',
     borderRadius: '10px'
-  
-  }
-  
-  const styleIconDel = {
+
+}
+
+const styleIconDel = {
     position: 'relative',
     right: '-.8em',
     top: '.5rem',
     cursor: 'pointer',
     height: '30px'
-  }
+}
 
 const EditCifra = () => {
     const { id } = useParams<{ id: string }>()
@@ -31,6 +31,7 @@ const EditCifra = () => {
     const [cifra, setCifra] = useState<ICifra | null>(null)
     const [title, setTitle] = useState('')
     const [tom, setTom] = useState('')
+    const [singer, setSinger] = useState<string>('')
     const [struct, setStruct] = useState<IStruct[]>([{ section: '', content: [''] }])
     const navigate = useNavigate()
     const BASE_URL: string = 'http://localhost:5000/cifras'
@@ -42,6 +43,7 @@ const EditCifra = () => {
                 setCifra(response.data)
                 setTitle(response.data.title)
                 setTom(response.data.tom)
+                setSinger(response.data.singer)
                 setStruct(response.data.Struct)
             } catch (error) {
                 console.error("There was an error fetching the cifra:", error)
@@ -63,6 +65,7 @@ const EditCifra = () => {
                 ...cifra,
                 title,
                 tom,
+                singer,
                 Struct: struct,
             })
             setData(prevData => prevData.map(item => item.id === Number(id) ? cifra! : item))
@@ -75,12 +78,12 @@ const EditCifra = () => {
     const handleStructChange = (index: number, key: keyof IStruct, value: string) => {
         const newStruct = [...struct]
         if (key === 'content') {
-          newStruct[index][key] = value.split(' ')
+            newStruct[index][key] = value.split(' ')
         } else {
-          newStruct[index][key] = value
+            newStruct[index][key] = value
         }
         setStruct(newStruct)
-      }
+    }
 
     const addSection = () => {
         setStruct([...struct, { section: '', content: [] }])
@@ -110,6 +113,15 @@ const EditCifra = () => {
                         label="Tom"
                         value={tom}
                         onChange={(e) => setTom(e.target.value)}
+                        fullWidth
+                        required
+                    />
+                </Box>
+                <Box marginBottom="1rem">
+                    <TextField
+                        label="Quem Canta?"
+                        value={singer}
+                        onChange={(e) => setSinger(e.target.value)}
                         fullWidth
                         required
                     />

@@ -1,11 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Box, Grid, IconButton, ListItem, TextField, Typography } from '@mui/material'
+import { Box, Grid, IconButton, ListItem, styled, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { CifraContext } from '../../ContextApi/CifraContext'
 import iconEdit from '../../assets/icon/icon-edit.png'
 import iconRemove from '../../assets/icon/icon-remove.png'
+
 import '../../_color.css'
+
+const LinkCifra = styled(Link)({
+  textDecoration: 'none',
+  display:'flex',
+  flexDirection: 'column',
+  marginBottom: '1rem',
+})
+
 const style = {
   display: 'flex',
   flexDirection: 'column',
@@ -24,6 +33,13 @@ const titleStyle = {
   cursor: 'pointer',
 }
 
+const singerStyle = {
+  fontSize: '.8rem',
+  color: 'var(--singer-color)',
+  margin:'-10px 0'
+}
+
+
 const ListCifra = () => {
   const { data, setData, setSelectCifra } = useContext(CifraContext)
   const navigate = useNavigate()
@@ -36,11 +52,17 @@ const ListCifra = () => {
   }
 
   const handleRemove = async (id: string | number) => {
+    const confirmRemoval = window.confirm("Você tem certeza que quer excluir esta cifra?");
+  
+    if (!confirmRemoval) {
+      return;
+    }
+  
     try {
-      await axios.delete(`${BASE_URL}/${id}`)
-      setData(prevData => prevData.filter(item => item.id !== id))
+      await axios.delete(`${BASE_URL}/${id}`);
+      setData(prevData => prevData.filter(item => item.id !== id));
     } catch (error) {
-      console.error("There was an error removing the item:", error)
+      console.error("There was an error removing the item:", error);
     }
   }
 
@@ -52,7 +74,6 @@ const ListCifra = () => {
     })
   }, [setData])
 
-  // Função para filtrar as cifras com base no termo de pesquisa
   const filteredCifras = data.filter(item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
@@ -62,6 +83,7 @@ const ListCifra = () => {
       <input
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder='Pesquisar a Cifra'
         style={{
           marginBottom: '1rem',
           width: '100%',
@@ -77,9 +99,10 @@ const ListCifra = () => {
       {filteredCifras.length > 0 ? (
         filteredCifras.map((item) => (
           <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'1rem'} width={'100%'}>
-            <Link to={`/cifras/${item.id}`} style={{ textDecoration: 'none' }}>
+            <LinkCifra to={`/cifras/${item.id}`}>
               <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
-            </Link>
+              <Typography sx={singerStyle} variant='caption'>{item.singer}</Typography>
+            </LinkCifra>
             <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} gap={'.5rem'}>
               <IconButton onClick={() => handleEdit(item.id)}>
                 <img src={iconEdit} alt='Editar cifra' />

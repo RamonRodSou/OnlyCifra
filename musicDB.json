@@ -4,6 +4,7 @@
       "id": "1",
       "title": "A Terra Clama",
       "tom": "C / Am",
+      "singer": "Original",
       "Struct": [
         {
           "section": "intro",
@@ -35,6 +36,7 @@
       "id": "2",
       "title": "Jeova Jihre",
       "tom": "G",
+      "singer": "Original",
       "Struct": [
         {
           "section": "intro",
@@ -66,6 +68,7 @@
       "id": "3",
       "title": "Ate que o Sr venha",
       "tom": "E / C#m",
+      "singer": "Original",
       "Struct": [
         {
           "section": "intro / Verso",
@@ -103,6 +106,7 @@
       "id": "e11a",
       "title": "A Ele a Gloria",
       "tom": "C / Am",
+      "singer": "Original",
       "Struct": [
         {
           "section": "Intro",
