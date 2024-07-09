@@ -5,7 +5,11 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #000000;
+  background-image: url('./assets/bkg.webp');
+  background-position-x: center;
+  background-position-y: center;
+  background-repeat: no-repeat;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

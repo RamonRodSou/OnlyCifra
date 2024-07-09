@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Box, Button, Container, IconButton, TextField } from '@mui/material'
 import { CifraContext } from '../../ContextApi/CifraContext'
 import { ICifra, IStruct } from '../../Interface/ICifra'
-import icon from '../../assets/icon/icon-remove.png'
+import icon from '../../assets/icon/icon-del.png'
 import BackPage from '../BackPage/BackPage'
 
 const styleForm = {

@@ -1,17 +1,16 @@
-import { Box, Button, Grid, IconButton, ListItem, Typography } from '@mui/material'
-import '../../_color.css'
-import React, { useContext, useEffect } from 'react'
-import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
+import { Box, Grid, IconButton, ListItem, TextField, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { CifraContext } from '../../ContextApi/CifraContext'
 import iconEdit from '../../assets/icon/icon-edit.png'
 import iconRemove from '../../assets/icon/icon-remove.png'
-
+import '../../_color.css'
 const style = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
   height: '85vh',
   width: '100%',
   padding: '1rem',
@@ -22,13 +21,14 @@ const style = {
 const titleStyle = {
   fontSize: '1.2rem',
   color: 'var(--titleMusic-color)',
-  cursor: 'pointer'
+  cursor: 'pointer',
 }
+
 const ListCifra = () => {
   const { data, setData, setSelectCifra } = useContext(CifraContext)
   const navigate = useNavigate()
   const BASE_URL: string = 'http://localhost:5000/cifras'
-
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handleEdit = (id: string | number) => {
     setSelectCifra(id)
@@ -52,24 +52,49 @@ const ListCifra = () => {
     })
   }, [setData])
 
+  // Função para filtrar as cifras com base no termo de pesquisa
+  const filteredCifras = data.filter(item =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <ListItem component="div" sx={style}>
-      {data.length > 0 && data.map((item) => (
-        <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'1rem'} width={'100%'}>
-          <Link to={`/cifras/${item.id}`} style={{ textDecoration: 'none' }}>
-            <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
-          </Link>
-          <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} gap={'.5rem'}>
-            <IconButton onClick={() => handleEdit(item.id)}>
-              <img src={iconEdit} alt='Editar cifra' />
-            </IconButton>
-            <IconButton onClick={() => handleRemove(item.id)} >
-              <img src={iconRemove} alt='Remover cifra' />
-            </IconButton>
+      <input
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{
+          marginBottom: '1rem',
+          width: '100%',
+          height: '2rem',
+          fontSize: '1rem',
+          padding: '0.5rem',
+          color: 'var(--searchParagraohy-color)',
+          backgroundColor: 'var(--backGoundSeach-color)',
+          borderRadius: '10px',
+        }}
+      />
 
-          </Grid>
-        </Box>
-      ))}
+      {filteredCifras.length > 0 ? (
+        filteredCifras.map((item) => (
+          <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'1rem'} width={'100%'}>
+            <Link to={`/cifras/${item.id}`} style={{ textDecoration: 'none' }}>
+              <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
+            </Link>
+            <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} gap={'.5rem'}>
+              <IconButton onClick={() => handleEdit(item.id)}>
+                <img src={iconEdit} alt='Editar cifra' />
+              </IconButton>
+              <IconButton onClick={() => handleRemove(item.id)} >
+                <img src={iconRemove} alt='Remover cifra' />
+              </IconButton>
+            </Grid>
+          </Box>
+        ))
+      ) : (
+        <Typography variant="body1" color="textSecondary">
+          Nenhuma cifra encontrada.
+        </Typography>
+      )}
     </ListItem>
   )
 }
