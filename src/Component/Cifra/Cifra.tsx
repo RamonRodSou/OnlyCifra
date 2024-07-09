@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Box, Container, Typography } from '@mui/material';
-import { CifraContext } from '../../ContextApi/CifraContext';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { ICifra } from '../../Interface/ICifra';
+import BackPage from '../BackPage/BackPage';
 
 const Cifra = () => {
   const { id } = useParams<{ id: string }>();
   const [cifra, setCifra] = useState<ICifra | null>(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,20 +31,23 @@ const Cifra = () => {
 
   return (
     <Container>
+      <Box margin={'1rem 0'}>
+        <BackPage children='Voltar'/>
+      </Box>
       <Box marginBottom="2rem">
-        <Typography variant="h4" component="h4" gutterBottom color={'var(--titleMusic-color)'}>
+        <Typography variant="body1" component="p" fontSize={'1.5rem'} gutterBottom color={'var(--titleMusic-color)'}>
           {cifra.title}
         </Typography>
-        <Typography variant="h5" component="h5" gutterBottom color={'var(--tom-color)'}>
+        <Typography variant="body2" component="p" fontSize={'1.3rem'}  gutterBottom color={'var(--tom-color)'}>
           Tom {cifra.tom}
         </Typography>
-        <Box width={'100%'} height={'70vh'} margin={'1rem 0'}>
+        <Box width={'100%'} margin={'1rem 0'}>
           {cifra.Struct.map((item, index) => (
-            <Box key={index} marginBottom="1rem">
-              <Typography variant="h4" component="h4" gutterBottom color={'var(--structure-color)'}>
+            <Box key={index} display={'flex'} flexDirection={'column'} >
+              <Typography margin={'0'} variant="body2" component="p" fontSize={'1.7rem'}  gutterBottom color={'var(--structure-color)'}>
                 {item.section.charAt(0).toUpperCase() + item.section.slice(1)}
               </Typography>
-              <Typography variant="h5" component="h5" gutterBottom color={'var(--grau-color)'}>
+              <Typography variant="body2" component="p" fontSize={'2rem'}  gutterBottom color={'var(--grau-color)'} width={'98%'} >
                 {item.content.join(' ')}
               </Typography>
             </Box>

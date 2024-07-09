@@ -1,14 +1,24 @@
 import './Home.css'
 import ListCifra from './Component/ListCifra/ListCifra'
-import NewCifra from './Component/NewCifra/NewCifra'
-
+import { Link } from 'react-router-dom'
+import { Box, styled } from '@mui/material'
+import iconAdd from './assets/icon/icon-add.png'
+const New = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
 
 function Home() {
 
   return (
     <>
       <ListCifra />
-      <NewCifra/>
+      <New>
+        <Link to='NewCifra'>
+          <img src={iconAdd} alt='Adicionar nova Cifra' />
+        </Link>
+      </New>
     </>
   )
 }

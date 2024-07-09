@@ -1,37 +1,156 @@
 {
-    "cifras": [
+  "cifras": [
+    {
+      "id": "1",
+      "title": "A Terra Clama",
+      "tom": "C / Am",
+      "Struct": [
         {
-          "id": 1,
-          "title": "A Terra Clama",
-          "tom": "C",
-          "Struct": [
-            { "section": "intro", "content":  ["|F", "G", "Am", "Em"]  },
-            { "section": "verso", "content": ["F", "G", "Am", "Em"] },
-            { "section": "refrao", "content": ["F", "G", "Am", "Em"] },
-            { "section": "ponte", "content": ["F", "G", "Am", "Em"] }
+          "section": "intro",
+          "content": [
+            "| F | G | Am | Em |"
           ]
         },
         {
-          "id": 2,
-          "title": "Dançar na Chuva",
-          "tom": "C",
-          "Struct": [
-            { "section": "verso", "content": ["F", "G", "Am", "Em"] },
-            { "section": "refrao", "content": ["F", "G", "Am", "Em"] },
-            { "section": "ponte", "content": ["F", "G", "Am", "Em"] }
+          "section": "verso",
+          "content": [
+            "| F | G | Am | Em |"
           ]
         },
         {
-          "id": 3,
-          "title": "Ate que o Sr venha",
-          "tom": "C",
-          "Struct": [
-            { "section": "verso", "content": ["F", "G", "Am", "Em"] },
-            { "section": "refrao", "content": ["F", "G", "Am", "Em"] },
-            { "section": "ponte", "content": ["F", "G", "Am", "Em"] }
+          "section": "refrao",
+          "content": [
+            "| F | G | Am | Em |"
+          ]
+        },
+        {
+          "section": "ponte",
+          "content": [
+            "| F | G | Am | Em |"
           ]
         }
       ]
-      
-  }
-  
+    },
+    {
+      "id": "2",
+      "title": "Jeova Jihre",
+      "tom": "G",
+      "Struct": [
+        {
+          "section": "intro",
+          "content": [
+            "| C | Am | Em | D |"
+          ]
+        },
+        {
+          "section": "verso",
+          "content": [
+            "|| G || C ||"
+          ]
+        },
+        {
+          "section": "refrao",
+          "content": [
+            "| C | D | Em | Bm | C | D | Em | G | "
+          ]
+        },
+        {
+          "section": "ponte",
+          "content": [
+            "| C | D | Em | Bm | C | D | Em | Am G |"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Ate que o Sr venha",
+      "tom": "E / C#m",
+      "Struct": [
+        {
+          "section": "intro / Verso",
+          "content": [
+            "| C#m | E |"
+          ]
+        },
+        {
+          "section": "verso 2",
+          "content": [
+            "| A | B | C#m | E |"
+          ]
+        },
+        {
+          "section": "verso 3",
+          "content": [
+            "| A | B | C#m | G#m |"
+          ]
+        },
+        {
+          "section": "pre-refrao",
+          "content": [
+            "| C#m | B | A | F#m |"
+          ]
+        },
+        {
+          "section": "refrao",
+          "content": [
+            "| A | B | C#m | G#m |"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e11a",
+      "title": "A Ele a Gloria",
+      "tom": "C / Am",
+      "Struct": [
+        {
+          "section": "Intro",
+          "content": [
+            "||",
+            "C",
+            "||",
+            "D",
+            "||"
+          ]
+        },
+        {
+          "section": "Verso",
+          "content": [
+            "||",
+            "Em",
+            "||",
+            "C",
+            "||",
+            "D",
+            "||",
+            "Em",
+            "||"
+          ]
+        },
+        {
+          "section": "Refrao",
+          "content": [
+            "|",
+            "C",
+            "|",
+            "D",
+            "|",
+            "G",
+            "",
+            "D/F#",
+            "|",
+            "Em",
+            "|",
+            "Am",
+            "|",
+            "D",
+            "|",
+            "Em",
+            "|"
+          ]
+        }
+      ]
+    }
+  ]
+}
