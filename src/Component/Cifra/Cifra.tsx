@@ -1,38 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Box, Container, Typography } from '@mui/material';
-import { ICifra } from '../../Interface/ICifra';
-import BackPage from '../BackPage/BackPage';
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
+import { Box, Container, Typography } from '@mui/material'
+import { ICifra } from '../../Interface/ICifra'
+import BackPage from '../BackPage/BackPage'
+import { fireBaseGetById } from '../../api/FireBaseDbCifra'
 
 
 const Cifra = () => {
-  const { id } = useParams<{ id: string }>();
-  const [cifra, setCifra] = useState<ICifra | null>(null);
+  const { id } = useParams<{ id: string }>()
+  const [cifra, setCifra] = useState<ICifra | null>(null)
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/cifras/${id}`);
-        setCifra(response.data);
-      } catch (error) {
-        console.error('Error fetching cifra:', error);
-      }
-    };
-
     if (id) {
-      fetchData();
+      fireBaseGetById(id, setCifra)
     }
-  }, [id]);
+  }, [id])
 
   if (!cifra) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   return (
     <Container>
-        <BackPage icon={true}/>
+      <BackPage icon={true} />
       <Box marginBottom="2rem">
         <Typography variant="body1" component="p" fontSize={'1.5rem'} gutterBottom color={'var(--titleMusic-color)'}>
           {cifra.title}
@@ -42,7 +34,7 @@ const Cifra = () => {
             Tom {cifra.tom}
           </Typography>
           <Typography variant="body2" component="p" fontSize={'1.3rem'} gutterBottom color={'var(--singer-color)'}>
-             {cifra.singer}
+            {cifra.singer}
           </Typography>
         </Box>
         <Box width={'100%'} margin={'1rem 0'}>
@@ -51,15 +43,17 @@ const Cifra = () => {
               <Typography margin={'0'} variant="body2" component="p" fontSize={'1.7rem'} gutterBottom color={'var(--structure-color)'}>
                 {item.section.charAt(0).toUpperCase() + item.section.slice(1)}
               </Typography>
-              <Typography variant="body2" component="p" fontSize={'2rem'} gutterBottom color={'var(--grau-color)'} width={'98%'} >
-                {item.content.join(' ')}
+              <Typography variant="body2" component="p" fontSize={'2rem'} gutterBottom color={'var(--grau-color)'} width={'98%'}>
+                {item.content.map(word => (
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                )).join(' ')}
               </Typography>
             </Box>
           ))}
         </Box>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default Cifra;
+export default Cifra

@@ -4,10 +4,11 @@ export interface IStruct {
   }[]
   
 export interface ICifra {
-    id: string | number
+    id: string
     title: string
     tom: string
     singer: string
     Struct: IStruct[]
+    createdAt: string
   }
   

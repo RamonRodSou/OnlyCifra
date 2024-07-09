@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import firebase from '../../service/fireBaseConecction'
 import { Box, Button, Container, IconButton, TextField, Typography } from '@mui/material'
 import { IStruct } from '../../Interface/ICifra'
 import icon from '../../assets/icon/icon-del.png'
 import BackPage from '../BackPage/BackPage'
+import { useNavigate } from 'react-router-dom'
 
 const styleForm = {
   display: 'flex',
@@ -23,11 +24,12 @@ const styleIconDel = {
   height: '30px'
 }
 
-const RegistrarCifra = () => {
+const NewCifra = () => {
   const [title, setTitle] = useState<string>('')
   const [tom, setTom] = useState<string>('')
   const [singer, setSinger] = useState<string>('')
   const [struct, setStruct] = useState<IStruct[]>([{ section: '', content: [''] }])
+  const navigate = useNavigate()
 
   const handleStructChange = (index: number, key: keyof IStruct, value: string) => {
     const newStruct = [...struct]
@@ -48,30 +50,36 @@ const RegistrarCifra = () => {
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const password = prompt('Por favor, insira a senha:')
+    e.preventDefault();
+  
+    const password = prompt('Por favor, insira a senha:');
     if (password !== 'servir') {
-      alert('Senha incorreta. Tente novamente.')
-      return
+      alert('Senha incorreta. Tente novamente.');
+      return;
     }
-
+  
     try {
-      await axios.post('http://localhost:5000/cifras', {
+      const createdAt = new Date().toISOString();
+  
+      await firebase.firestore().collection('cifras').add({
         title,
         tom,
         singer,
-        Struct: struct
-      })
-      setTitle('')
-      setTom('')
-      setStruct([{ section: '', content: [''] }])
+        Struct: struct,
+        createdAt: createdAt,
+      });
+  
+      setTitle('');
+      setTom('');
+      setSinger('');
+      setStruct([{ section: '', content: [''] }]);
+      alert('Cifra registrada com sucesso!');
     } catch (error) {
-      console.error('Error registering cifra:', error)
+      console.error('Erro ao registrar cifra:', error);
+      alert('Erro ao registrar a cifra. Verifique o console para mais detalhes.');
     }
-  }
-
-
+  };
+  
   return (
     <Container sx={styleForm}>
       <Typography variant="h4" component="h1" gutterBottom color={'var(--titleNewCifra-color)'}>
@@ -135,8 +143,8 @@ const RegistrarCifra = () => {
           <Button type="submit" variant="contained" color="info">
           <BackPage icon={false} children='Salvar' />
           </Button>
-          <Button type="submit" variant="contained" color="error">
-            <BackPage icon={false} children='Cancelar' />
+          <Button variant="contained" color="error" onClick={() => navigate('/')}>
+            Cancelar
           </Button>
         </Box>
       </form>
@@ -144,4 +152,4 @@ const RegistrarCifra = () => {
   )
 }
 
-export default RegistrarCifra
+export default NewCifra

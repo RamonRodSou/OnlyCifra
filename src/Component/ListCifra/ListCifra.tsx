@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { Box, Grid, IconButton, ListItem, styled, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { CifraContext } from '../../ContextApi/CifraContext'
 import iconEdit from '../../assets/icon/icon-edit.png'
 import iconRemove from '../../assets/icon/icon-remove.png'
 
 import '../../_color.css'
+import { fireBaseDelete, fireBaseGet } from '../../api/FireBaseDbCifra'
 
 const LinkCifra = styled(Link)({
   textDecoration: 'none',
@@ -39,40 +39,35 @@ const singerStyle = {
   margin: '-10px 0'
 }
 
-
 const ListCifra = () => {
   const { data, setData, setSelectCifra } = useContext(CifraContext)
   const navigate = useNavigate()
-  const BASE_URL: string = 'http://localhost:5000/cifras'
   const [searchTerm, setSearchTerm] = useState('')
 
-  const handleEdit = (id: string | number) => {
+  const handleEdit = (id: string) => {
     setSelectCifra(id)
     navigate(`/edit/${id}`)
   }
 
-  const handleRemove = async (id: string | number) => {
-    const password = prompt('Por favor, insira a senha:')
+  const handleRemove = async (id:any) => {
+    const password = prompt('Por favor, insira a senha:');
     if (password !== 'servir') {
-      alert('Senha incorreta. Tente novamente.')
-      return
+      alert('Senha incorreta. Tente novamente.');
+      return;
     }
 
     try {
-      await axios.delete(`${BASE_URL}/${id}`);
-      setData(prevData => prevData.filter(item => item.id !== id));
+      await fireBaseDelete(id)
+      window.location.reload()
     } catch (error) {
-      console.error("There was an error removing the item:", error);
+      console.error('Erro ao remover a cifra:', error);
     }
   }
 
   useEffect(() => {
-    axios.get(BASE_URL).then((res) => {
-      setData(res.data)
-    }).catch(error => {
-      console.error("There was an error fetching the data:", error)
-    })
+    fireBaseGet(setData)
   }, [setData])
+
 
   const filteredCifras = data.filter(item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
