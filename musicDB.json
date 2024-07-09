@@ -1,14 +1,37 @@
 {
     "cifras": [
-      {
-        "id": 1,
-        "title": "A Terra Clama",
-        "tom": "C",
-        "intro": "",
-        "verso": ["F", "G", "Am", "Em"],
-        "refrao": ["F", "G", "Am", "Em"],
-        "ponte": ["F", "G", "Am", "Em"]
-      }
-    ]
+        {
+          "id": 1,
+          "title": "A Terra Clama",
+          "tom": "C",
+          "Struct": [
+            { "section": "intro", "content":  ["|F", "G", "Am", "Em"]  },
+            { "section": "verso", "content": ["F", "G", "Am", "Em"] },
+            { "section": "refrao", "content": ["F", "G", "Am", "Em"] },
+            { "section": "ponte", "content": ["F", "G", "Am", "Em"] }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Dançar na Chuva",
+          "tom": "C",
+          "Struct": [
+            { "section": "verso", "content": ["F", "G", "Am", "Em"] },
+            { "section": "refrao", "content": ["F", "G", "Am", "Em"] },
+            { "section": "ponte", "content": ["F", "G", "Am", "Em"] }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Ate que o Sr venha",
+          "tom": "C",
+          "Struct": [
+            { "section": "verso", "content": ["F", "G", "Am", "Em"] },
+            { "section": "refrao", "content": ["F", "G", "Am", "Em"] },
+            { "section": "ponte", "content": ["F", "G", "Am", "Em"] }
+          ]
+        }
+      ]
+      
   }
   

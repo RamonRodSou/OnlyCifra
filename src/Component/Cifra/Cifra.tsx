@@ -1,65 +1,57 @@
-import { Box, Container, Grid, Typography } from '@mui/material'
-import '../../_color.css'
-import React from 'react'
-import StructureCifra from '../StructureCifra/StructureCifra'
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Box, Container, Typography } from '@mui/material';
+import { CifraContext } from '../../ContextApi/CifraContext';
+import { ICifra } from '../../Interface/ICifra';
 
-type Props = {}
+const Cifra = () => {
+  const { id } = useParams<{ id: string }>();
+  const [cifra, setCifra] = useState<ICifra | null>(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/cifras/${id}`);
+        setCifra(response.data);
+      } catch (error) {
+        console.error('Error fetching cifra:', error);
+      }
+    };
 
-const cifraData = [
-  {
-    id: 1,
-    title: "A Terra Clama",
-    tom: "C",
-    cifra: {
-      verso: ["| F | G | Am | Em |"],
-      refrao: ["| F | G | Am | Em |"],
-      ponte:  ["| F | G | Am | Em |"]
+    if (id) {
+      fetchData();
     }
-  },
+  }, [id]);
 
-]
-
-const tamanhoLetras = {
-  fontSize: '1.7rem',
-
-}
-
-const Cifra: React.FC<Props> = () => {
-
-  const [cifra, setCifra] = React.useState(cifraData)
+  if (!cifra) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container>
-      {cifra.map((item) => (
-        <Box key={item.id} marginBottom="2rem">
-          <Typography variant="h4" component="h4" gutterBottom color={'var(--titleMusic-color)'}>
-            {item.title}
-          </Typography>
-          <Typography variant="h5" component="h5" gutterBottom color={'var(--tom-color)'}>
-            Tom {item.tom}
-          </Typography>
-
-          <Box width={'100%'} height={'70vh'} margin={'1rem 0'}>
-            {Object.keys(item.cifra).map((section) => (
-              <Box key={section} marginBottom="1rem">
-                <Grid display={'flex'} flexDirection={'column'} alignItems={'flex-start'} justifyContent={'center'}>
-                  <Typography sx={tamanhoLetras} variant="body1" component="p" gutterBottom color={'var(--structure-color)'}>
-                    {section.charAt(0).toUpperCase() + section.slice(1)} 
-                  </Typography>
-                  <Box>
-                    <Typography sx={tamanhoLetras} variant="body2" component="p" gutterBottom color={'var(--grau-color)'}>
-                     {item.cifra[section as keyof typeof item.cifra]}
-                    </Typography>
-                  </Box>
-                </Grid>
-              </Box>
-            ))}
-          </Box>
+      <Box marginBottom="2rem">
+        <Typography variant="h4" component="h4" gutterBottom color={'var(--titleMusic-color)'}>
+          {cifra.title}
+        </Typography>
+        <Typography variant="h5" component="h5" gutterBottom color={'var(--tom-color)'}>
+          Tom {cifra.tom}
+        </Typography>
+        <Box width={'100%'} height={'70vh'} margin={'1rem 0'}>
+          {cifra.Struct.map((item, index) => (
+            <Box key={index} marginBottom="1rem">
+              <Typography variant="h4" component="h4" gutterBottom color={'var(--structure-color)'}>
+                {item.section.charAt(0).toUpperCase() + item.section.slice(1)}
+              </Typography>
+              <Typography variant="h5" component="h5" gutterBottom color={'var(--grau-color)'}>
+                {item.content.join(' ')}
+              </Typography>
+            </Box>
+          ))}
         </Box>
-      ))}
+      </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default Cifra
+export default Cifra;
