@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Box, Grid, IconButton, ListItem, styled, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -10,7 +10,7 @@ import '../../_color.css'
 
 const LinkCifra = styled(Link)({
   textDecoration: 'none',
-  display:'flex',
+  display: 'flex',
   flexDirection: 'column',
   marginBottom: '1rem',
 })
@@ -36,7 +36,7 @@ const titleStyle = {
 const singerStyle = {
   fontSize: '.8rem',
   color: 'var(--singer-color)',
-  margin:'-10px 0'
+  margin: '-10px 0'
 }
 
 
@@ -52,12 +52,12 @@ const ListCifra = () => {
   }
 
   const handleRemove = async (id: string | number) => {
-    const confirmRemoval = window.confirm("Você tem certeza que quer excluir esta cifra?");
-  
-    if (!confirmRemoval) {
-      return;
+    const password = prompt('Por favor, insira a senha:')
+    if (password !== 'servir') {
+      alert('Senha incorreta. Tente novamente.')
+      return
     }
-  
+
     try {
       await axios.delete(`${BASE_URL}/${id}`);
       setData(prevData => prevData.filter(item => item.id !== id));

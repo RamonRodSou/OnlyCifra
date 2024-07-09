@@ -49,20 +49,28 @@ const RegistrarCifra = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    const password = prompt('Por favor, insira a senha:')
+    if (password !== 'servir') {
+      alert('Senha incorreta. Tente novamente.')
+      return
+    }
+
     try {
       await axios.post('http://localhost:5000/cifras', {
         title,
         tom,
+        singer,
         Struct: struct
       })
       setTitle('')
       setTom('')
-      setSinger('')
-      setStruct([{ section: '', content: [' '] }])
+      setStruct([{ section: '', content: [''] }])
     } catch (error) {
       console.error('Error registering cifra:', error)
     }
   }
+
 
   return (
     <Container sx={styleForm}>
