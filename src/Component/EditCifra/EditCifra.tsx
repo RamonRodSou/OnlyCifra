@@ -29,6 +29,7 @@ const EditCifra = () => {
   const [title, setTitle] = useState<string>('')
   const [tom, setTom] = useState<string>('')
   const [singer, setSinger] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
   const [struct, setStruct] = useState<IStruct[]>([{ section: '', content: [''] }])
   const navigate = useNavigate()
 
@@ -43,6 +44,7 @@ const EditCifra = () => {
             setTitle(cifraData.title || '')
             setTom(cifraData.tom || '')
             setSinger(cifraData.singer || '')
+            setDescription(cifraData.description || '')
             setStruct(cifraData.Struct || [{ section: '', content: [''] }])
           }
         })
@@ -65,6 +67,7 @@ const EditCifra = () => {
         title: title || '',
         tom: tom || '',
         singer: singer || '',
+        description: description || '',
         Struct: struct || [{ section: '', content: [''] }]
       }
 
@@ -73,7 +76,6 @@ const EditCifra = () => {
         prevData.map(item => (item.id === id ? { ...updatedCifra } : item))
       )
       navigate('/')
-      alert('Cifra atualizada com sucesso!')
     } catch (error) {
       console.error('Erro ao atualizar cifra:', error)
       alert('Erro ao atualizar a cifra. Verifique o console para mais detalhes.')
@@ -159,6 +161,16 @@ const EditCifra = () => {
         <Button onClick={addSection} variant="contained" color="warning">
           Add Estrutura
         </Button>
+        <Box marginTop="1rem" >
+          <TextField
+            label="Descrição"
+            multiline
+            rows={4}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            fullWidth
+          />
+        </Box>
         <Box marginTop="2rem" display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
           <Button type="submit" variant="contained" color="info">
             Salvar

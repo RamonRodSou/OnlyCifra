@@ -9,6 +9,7 @@ export interface ICifra {
     tom: string
     singer: string
     Struct: IStruct[]
+    description : string
     createdAt: string
   }
   

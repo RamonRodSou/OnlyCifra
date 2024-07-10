@@ -9,6 +9,7 @@ export async function fireBasePost(cifra: ICifra) {
       tom: cifra.tom,
       singer: cifra.singer,
       Struct: cifra.Struct,
+      description: cifra.description,
       createdAt: createdAt,
     })
     alert('Cifra registrada com sucesso!')
@@ -50,6 +51,7 @@ export async function fireBaseUpdate(id: string, cifra: ICifra) {
       title: cifra.title,
       tom: cifra.tom,
       singer: cifra.singer,
+      description: cifra.description,
       Struct: cifra.Struct,
     })
   } catch (error) {

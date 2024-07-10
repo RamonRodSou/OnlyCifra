@@ -3,7 +3,6 @@ import firebase from '../../service/fireBaseConecction'
 import { Box, Button, Container, IconButton, TextField, Typography } from '@mui/material'
 import { IStruct } from '../../Interface/ICifra'
 import icon from '../../assets/icon/icon-del.png'
-import BackPage from '../BackPage/BackPage'
 import { useNavigate } from 'react-router-dom'
 
 const styleForm = {
@@ -28,6 +27,7 @@ const NewCifra = () => {
   const [title, setTitle] = useState<string>('')
   const [tom, setTom] = useState<string>('')
   const [singer, setSinger] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
   const [struct, setStruct] = useState<IStruct[]>([{ section: '', content: [''] }])
   const navigate = useNavigate()
 
@@ -46,39 +46,41 @@ const NewCifra = () => {
   }
 
   const removeSection = (index: number) => {
-    setStruct(struct.filter((_, i) => i !== index));
+    setStruct(struct.filter((_, i) => i !== index))
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
   
-    const password = prompt('Por favor, insira a senha:');
+    const password = prompt('Por favor, insira a senha:')
     if (password !== 'servir') {
-      alert('Senha incorreta. Tente novamente.');
-      return;
+      alert('Senha incorreta. Tente novamente.')
+      return
     }
   
     try {
-      const createdAt = new Date().toISOString();
+      const createdAt = new Date().toISOString()
   
       await firebase.firestore().collection('cifras').add({
         title,
         tom,
         singer,
+        description: description,
         Struct: struct,
         createdAt: createdAt,
-      });
+      })
   
-      setTitle('');
-      setTom('');
-      setSinger('');
-      setStruct([{ section: '', content: [''] }]);
-      alert('Cifra registrada com sucesso!');
+      setTitle('')
+      setTom('')
+      setSinger('')
+      setDescription('')
+      setStruct([{ section: '', content: [''] }])
+      window.history.back()
     } catch (error) {
-      console.error('Erro ao registrar cifra:', error);
-      alert('Erro ao registrar a cifra. Verifique o console para mais detalhes.');
+      console.error('Erro ao registrar cifra:', error)
+      alert('Erro ao registrar a cifra. Verifique o console para mais detalhes.')
     }
-  };
+  }
   
   return (
     <Container sx={styleForm}>
@@ -139,9 +141,19 @@ const NewCifra = () => {
         <Button onClick={addSection} variant="contained" color="warning">
           Add Estrutura
         </Button>
+        <Box marginTop="1rem" >
+          <TextField
+            label="Descrição"
+            multiline
+            rows={4}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            fullWidth
+          />
+        </Box>
         <Box marginTop="2rem" display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
           <Button type="submit" variant="contained" color="info">
-          <BackPage icon={false} children='Salvar' />
+            Salvar
           </Button>
           <Button variant="contained" color="error" onClick={() => navigate('/')}>
             Cancelar
