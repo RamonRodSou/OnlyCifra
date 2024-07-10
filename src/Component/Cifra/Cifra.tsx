@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box, Button, Container, ListItem, Typography } from '@mui/material'
 import { ICifra } from '../../Interface/ICifra'
@@ -12,7 +12,7 @@ const style = {
   justifyContent: 'flex-start',
   height: '70vh',
   width: '98%',
-  margin:'rem 0',
+  margin: 'rem 0',
   overflowY: 'auto',
   overflowX: 'hidden',
   padding: 0
@@ -30,7 +30,7 @@ const Cifra = () => {
     if (onOffDescription == false) {
       setDescricao('Fechar descrição')
     }
-    else{
+    else {
       setDescricao('Abrir descrição')
     }
   }
@@ -60,26 +60,30 @@ const Cifra = () => {
           </Typography>
         </Box>
         <ListItem component="div" sx={style}>
-        {cifra.Struct.map((item, index) => (
+          {cifra.Struct.map((item, index) => (
             <Box key={index} display={'flex'} flexDirection={'column'} width={'100%'} >
               <Typography margin={'0'} variant="body2" component="p" fontSize={'1.7rem'} gutterBottom color={'var(--structure-color)'}>
                 {item.section.charAt(0).toUpperCase() + item.section.slice(1)}
               </Typography>
               <Typography variant="body2" component="p" fontSize={'2rem'} margin={'0'} gutterBottom color={'var(--grau-color)'} width={'98%'}>
-                {item.content.map(word => (
-                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                )).join(' ')}
+                {item.content.map((word, idx) => (
+                  <React.Fragment key={idx}>
+                    {word === 'P' || word === 'p'? <br /> : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}{' '}
+                    
+                  </React.Fragment>
+                ))}
               </Typography>
+
             </Box>
           ))}
         </ListItem>
       </Box>
-      <Button onClick={handleDescription} style={{'color':'var(--description-color)', 'padding': ' .5rem  0'}}>{descricao}</Button>
+      <Button onClick={handleDescription} style={{ 'color': 'var(--description-color)', 'padding': ' .5rem  0' }}>{descricao}</Button>
 
       {onOffDescription &&
         <Box>
           <Typography>
-            {cifra.description == '' ? 'Não há descrição' : cifra.description }
+            {cifra.description == '' ? 'Não há descrição' : cifra.description}
           </Typography>
         </Box>}
     </Container>
