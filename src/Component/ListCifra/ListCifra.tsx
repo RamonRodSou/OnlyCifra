@@ -20,7 +20,7 @@ const style = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  height: '75vh',
+  height: '73vh',
   width: '100%',
   overflowY: 'auto',
   overflowX: 'hidden',
@@ -28,7 +28,7 @@ const style = {
 }
 
 const titleStyle = {
-  fontSize: '1.2rem',
+  fontSize: '1rem',
   color: 'var(--titleMusic-color)',
   cursor: 'pointer',
 }
@@ -43,23 +43,24 @@ const ListCifra = () => {
   const { data, setData, setSelectCifra, searchTerm } = useContext(CifraContext)
   const navigate = useNavigate()
 
+
   const handleEdit = (id: string) => {
     setSelectCifra(id)
     navigate(`/edit/${id}`)
   }
 
   const handleRemove = async (id: any) => {
-    const password = prompt('Por favor, insira a senha:');
+    const password = prompt('Por favor, insira a senha:')
     if (password !== 'servir') {
-      alert('Senha incorreta. Tente novamente.');
-      return;
+      alert('Senha incorreta. Tente novamente.')
+      return
     }
 
     try {
       await fireBaseDelete(id)
       window.location.reload()
     } catch (error) {
-      console.error('Erro ao remover a cifra:', error);
+      console.error('Erro ao remover a cifra:', error)
     }
   }
 
@@ -77,12 +78,12 @@ const ListCifra = () => {
       <ListItem component="div" sx={style}>
         {filteredCifras.length > 0 ? (
           filteredCifras.map((item) => (
-            <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'1rem'} width={'100%'}>
+            <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'.5rem'} width={'100%'}>
               <LinkCifra to={`/cifras/${item.id}`}>
                 <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
                 <Typography sx={singerStyle} variant='caption'>{item.singer}</Typography>
               </LinkCifra>
-              <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} gap={'.5rem'}>
+              <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} gap={'.5rem'}> 
                 <IconButton onClick={() => handleEdit(item.id)}>
                   <img src={iconEdit} alt='Editar cifra' />
                 </IconButton>

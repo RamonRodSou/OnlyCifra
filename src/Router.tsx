@@ -4,6 +4,8 @@ import Home from './Home'
 import { CifraProvider } from './ContextApi/CifraContext'
 import NewCifra from './Component/NewCifra/NewCifra'
 import EditCifra from './Component/EditCifra/EditCifra'
+import Escala from './Component/Escala/Escala'
+import PlayList from './Component/PlayList/PlayList'
 
 const Router = () => {
     return (
@@ -14,7 +16,8 @@ const Router = () => {
                     <Route path="/cifras/:id" element={<Cifra />} />
                     <Route path="/NewCifra" element={<NewCifra />} />
                     <Route path="/edit/:id" element={<EditCifra />} />
-
+                    <Route path="/PlayList" element={<PlayList />} />
+                    <Route path="/Escala" element={<Escala />} />
                 </Routes>
 
             </BrowserRouter>

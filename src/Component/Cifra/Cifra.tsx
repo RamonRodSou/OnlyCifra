@@ -68,7 +68,7 @@ const Cifra = () => {
               <Typography variant="body2" component="p" fontSize={'2rem'} margin={'0'} gutterBottom color={'var(--grau-color)'} width={'98%'}>
                 {item.content.map((word, idx) => (
                   <React.Fragment key={idx}>
-                    {word === 'P' || word === 'p'? <br /> : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()}{' '}
+                    {word === 'P' || word === 'p'? <br /> : word.charAt(0).toUpperCase() + word.slice(1)}{' '}
                     
                   </React.Fragment>
                 ))}
