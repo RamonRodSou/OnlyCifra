@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import BackPage from '../BackPage/BackPage'
 
-type Props = {}
+// type Props = {}
 
-const Escala = (props: Props) => {
+const Escala = () => {
   return (
     <Box padding={'0 2rem'}>
       <BackPage icon={true} />

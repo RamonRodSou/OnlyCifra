@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material'
 import BackPage from '../BackPage/BackPage'
 
-type Props = {}
+// type Props = {}
 
-const PlayList = (props: Props) => {
+const PlayList = () => {
   return (
     <Box padding={'0 2rem'}>
       <BackPage icon={true} />
