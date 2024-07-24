@@ -27,7 +27,11 @@ const titleStyle = {
 const singerStyle = {
   fontSize: '.8rem',
   color: 'var(--singer-color)',
-  margin: '-10px 0'
+}
+
+const singerStyleTom = {
+  fontSize: '.8rem',
+  color: 'var(--tom-color)',
 }
 
 const PlayList = () => {
@@ -48,14 +52,22 @@ const PlayList = () => {
         {list.length > 0 ? (
           list.map((item) => (
             <Link to={`/cifras/${item.id}`} style={{ textDecoration: 'none', width: '100%', margin: '.7rem' }}>
-              <Box width={'100%'} display={'flex'} justifyItems={'space-between'} alignItems={'center'}>
+
+              <Box width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+
                 <Box key={item.id} display={'flex'} flexDirection={'column'} alignItems={'start'} justifyContent={'space-between'} width={'100%'}>
                   <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
-                  <Typography sx={singerStyle} variant='caption'>{item.singer}</Typography>
+
+                  <Box display={'flex'} justifyContent={'space-between'}  alignItems={'center'}  width={'60%'}>
+                    <Typography sx={singerStyle} variant='caption'>{item.singer}</Typography>
+                    <Typography sx={singerStyleTom} variant='caption'>Tom {item.tom}</Typography>
+                  </Box>
+                  
                 </Box>
+
                 <Box display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} padding={'0 .5rem'}>
                   <FavoriteIcon style={{ color: '#f44336' }} />
-                </Box>  
+                </Box>
               </Box>
 
             </Link>
