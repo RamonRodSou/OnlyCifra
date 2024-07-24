@@ -61,6 +61,7 @@ const ListCifra = () => {
   const filteredCifras = data.filter(item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
+  console.log(filteredCifras.length)
 
   return (
     <ListItem component="div" sx={style}>
@@ -82,7 +83,8 @@ const ListCifra = () => {
           </Box>
         ))
       ) : (
-        <Typography variant="body1" color="textSecondary">
+        
+        <Typography variant="body1" sx={{color:'#fff'}}>
           Nenhuma cifra encontrada.
         </Typography>
       )}

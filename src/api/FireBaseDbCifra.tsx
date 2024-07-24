@@ -95,3 +95,57 @@ export const fireBaseGetFavorites = async (setList: React.Dispatch<React.SetStat
     console.error('Erro ao obter os favoritos:', error)
   }
 }
+
+
+
+//------- Teste
+
+// Adiciona uma nova playlist
+export async function createPlaylist(name: string) {
+  try {
+    const createdAt = new Date().toISOString();
+    const newPlaylist = await firebase.firestore().collection('playlists').add({
+      name,
+      songs: [],
+      createdAt,
+    });
+    return newPlaylist.id;
+  } catch (error) {
+    console.error('Erro ao criar playlist:', error);
+  }
+}
+
+// Adiciona uma música a uma playlist
+export async function addSongToPlaylist(playlistId: string, songId: string) {
+  try {
+    const playlistRef = firebase.firestore().collection('playlists').doc(playlistId);
+    await playlistRef.update({
+      songs: firebase.firestore.FieldValue.arrayUnion(songId),
+    });
+  } catch (error) {
+    console.error('Erro ao adicionar música à playlist:', error);
+  }
+}
+
+// Remove uma música de uma playlist
+export async function removeSongFromPlaylist(playlistId: string, songId: string) {
+  try {
+    const playlistRef = firebase.firestore().collection('playlists').doc(playlistId);
+    await playlistRef.update({
+      songs: firebase.firestore.FieldValue.arrayRemove(songId),
+    });
+  } catch (error) {
+    console.error('Erro ao remover música da playlist:', error);
+  }
+}
+
+// Obtém todas as playlists
+export async function getPlaylists(setPlaylists: React.Dispatch<React.SetStateAction<any[]>>) {
+  try {
+    const snapshot = await firebase.firestore().collection('playlists').get();
+    const playlists = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setPlaylists(playlists);
+  } catch (error) {
+    console.error('Erro ao obter playlists:', error);
+  }
+}
