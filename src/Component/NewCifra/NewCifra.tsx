@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import firebase from '../../service/fireBaseConecction'
-import { Box, Button, Container, IconButton, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { IStruct } from '../../Interface/ICifra'
-import icon from '../../assets/icon/icon-del.png'
+import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
 import { useNavigate } from 'react-router-dom'
 
 const styleForm = {
@@ -133,9 +133,8 @@ const NewCifra = () => {
                 required
               />
             </Box>
-            <IconButton onClick={() => removeSection(index)} color="secondary" sx={styleIconDel}>
-              <img src={icon} alt='Botao Deletar Estrutura' />
-            </IconButton>
+            <HighlightOffRoundedIcon onClick={() => removeSection(index)} color="secondary" sx={styleIconDel}/>
+    
           </Box>
         ))}
         <Button onClick={addSection} variant="contained" color="warning">

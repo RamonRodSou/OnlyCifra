@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Box, Container, Typography, ListItem } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { CifraContext } from '../../ContextApi/CifraContext';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import BackPage from '../BackPage/BackPage';
-import { fireBaseGetById, fireBaseGetFavorites } from '../../api/FireBaseDbCifra';
-import { ICifra } from '../../Interface/ICifra';
+import { useContext, useEffect } from 'react'
+import { Box, Container, Typography, ListItem } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { CifraContext } from '../../ContextApi/CifraContext'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import BackPage from '../BackPage/BackPage'
+import { fireBaseGetFavorites } from '../../api/FireBaseDbCifra'
 
 const style = {
   display: 'flex',
@@ -17,25 +16,25 @@ const style = {
   overflowY: 'auto',
   overflowX: 'hidden',
   padding: 0
-};
+}
 
 const titleStyle = {
   fontSize: '1rem',
   color: 'var(--titleMusic-color)',
   cursor: 'pointer',
-};
+}
 
 const singerStyle = {
   fontSize: '.8rem',
   color: 'var(--singer-color)',
   margin: '-10px 0'
-};
+}
 
 const PlayList = () => {
   const { list, setList } = useContext(CifraContext)
 
   useEffect(() => {
-    fireBaseGetFavorites(setList);
+    fireBaseGetFavorites(setList)
   }, [setList])
 
   return (
@@ -69,7 +68,7 @@ const PlayList = () => {
         )}
       </ListItem>
     </Container>
-  );
-};
+  )
+}
 
-export default PlayList;
+export default PlayList

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Box, Button, Container, IconButton, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { CifraContext } from '../../ContextApi/CifraContext'
 import { ICifra, IStruct } from '../../Interface/ICifra'
-import icon from '../../assets/icon/icon-del.png'
 import { fireBaseUpdate, fireBaseGetById } from '../../api/FireBaseDbCifra'
+import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
+
 const styleForm = {
   display: 'flex',
   flexDirection: 'column',
@@ -19,7 +20,7 @@ const styleIconDel = {
   right: '-.8em',
   top: '.5rem',
   cursor: 'pointer',
-  height: '30px'
+  height: '30px',
 }
 
 const EditCifra = () => {
@@ -152,9 +153,7 @@ const EditCifra = () => {
                 required
               />
             </Box>
-            <IconButton onClick={() => removeSection(index)} color="secondary" sx={styleIconDel}>
-              <img src={icon} alt='Botao Deletar Estrutura' />
-            </IconButton>
+            <HighlightOffRoundedIcon onClick={() => removeSection(index)} color="secondary" sx={styleIconDel}/>
           </Box>
         ))}
         <Button onClick={addSection} variant="contained" color="warning">
