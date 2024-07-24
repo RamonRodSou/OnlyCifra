@@ -5,7 +5,7 @@ import { CifraContext } from '../../ContextApi/CifraContext'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import '../../_color.css'
-import { fireBaseAddFavorite, fireBaseGet, fireBaseRemoveFavorite } from '../../api/FireBaseDbCifra'
+import { fireBaseAddFavorite, fireBaseGet, fireBaseGetFavorites, fireBaseRemoveFavorite } from '../../api/FireBaseDbCifra'
 import { ICifra } from '../../Interface/ICifra'
 
 const LinkCifra = styled(Link)({
@@ -44,6 +44,8 @@ const ListCifra = () => {
 
   useEffect(() => {
     fireBaseGet(setData)
+    fireBaseGetFavorites(setList)
+
   }, [setData])
 
   const handleFavoriteToggle = async (cifra: ICifra) => {
@@ -71,7 +73,7 @@ const ListCifra = () => {
             </LinkCifra>
             <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} padding={'0 .5rem'}>
               {list.some((favItem) => favItem.id === item.id) ? (
-                
+
                 <FavoriteIcon style={{ color: '#f44336', cursor: 'pointer' }} onClick={() => handleFavoriteToggle(item)} />
               ) : (
                 <FavoriteBorderIcon style={{ cursor: 'pointer' }} onClick={() => handleFavoriteToggle(item)} />
