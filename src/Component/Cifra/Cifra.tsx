@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Box, Button, Container, ListItem, Typography } from '@mui/material'
 import { ICifra } from '../../Interface/ICifra'
 import BackPage from '../BackPage/BackPage'
-import { fireBaseGetById } from '../../api/FireBaseDbCifra'
+import { fireBaseDelete, fireBaseGetById } from '../../api/FireBaseDbCifra'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { CifraContext } from '../../ContextApi/CifraContext'
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const style = {
   display: 'flex',
@@ -24,6 +27,12 @@ const Cifra = () => {
   const [onOffDescription, setOnOffDescription] = useState<boolean>(false)
   const [descricao, setDescricao] = useState<string>('Abrir descrição')
 
+  const { setSearchTerm, setSelectCifra } = useContext(CifraContext)
+
+
+  const navigate = useNavigate()
+
+  1
   function handleDescription() {
 
     setOnOffDescription(!onOffDescription)
@@ -34,6 +43,31 @@ const Cifra = () => {
       setDescricao('Abrir descrição')
     }
   }
+
+  const handleRemove = async (id: any) => {
+    const password = prompt('Por favor, insira a senha:')
+    if (password !== 'servir') {
+      alert('Senha incorreta. Tente novamente.')
+      return
+    } try {
+      await fireBaseDelete(id)
+      alert('Cifra Removida')
+      setSearchTerm('')
+
+      navigate('/')
+
+    } catch (error) {
+      console.error('Erro ao remover a cifra:', error)
+    }
+  }
+
+
+  const handleEdit = (id: any) => {
+    setSelectCifra(id)
+    navigate(`/edit/${id}`)
+  }
+
+
   useEffect(() => {
     if (id) {
       fireBaseGetById(id, setCifra)
@@ -46,11 +80,19 @@ const Cifra = () => {
 
   return (
     <Container>
-      <BackPage icon={true} />
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <BackPage icon={true} />
+        <Box width={'20%'} display={'flex'} justifyContent={'space-between'} alignItems={'center'} sx={{ margin: '0 -1rem' }}>
+          <EditNoteIcon onClick={() => handleEdit(id)} />
+          <DeleteForeverIcon onClick={() => handleRemove(id)} sx={{ color: 'red' }} />
+        </Box>
+      </Box>
+
       <Box marginBottom=".1rem">
         <Typography variant="body1" component="p" fontSize={'1.5rem'} gutterBottom color={'var(--titleMusic-color)'}>
           {cifra.title}
         </Typography>
+
         <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
           <Typography variant="body2" component="p" fontSize={'1.3rem'} gutterBottom color={'var(--tom-color)'}>
             Tom {cifra.tom}
@@ -68,8 +110,8 @@ const Cifra = () => {
               <Typography variant="body2" component="p" fontSize={'2rem'} margin={'0'} gutterBottom color={'var(--grau-color)'} width={'98%'}>
                 {item.content.map((word, idx) => (
                   <React.Fragment key={idx}>
-                    {word === 'P' || word === 'p'? <br /> : word.charAt(0).toUpperCase() + word.slice(1)}{' '}
-                    
+                    {word === 'P' || word === 'p' ? <br /> : word.charAt(0).toUpperCase() + word.slice(1)}{' '}
+
                   </React.Fragment>
                 ))}
               </Typography>
@@ -78,7 +120,10 @@ const Cifra = () => {
           ))}
         </ListItem>
       </Box>
-      <Button onClick={handleDescription} style={{ 'color': 'var(--description-color)', 'padding': ' .5rem  0' }}>{descricao}</Button>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Button onClick={handleDescription} style={{ 'color': 'var(--description-color)', 'padding': ' .5rem  0' }}>{descricao}</Button>
+      </Box>
+
 
       {onOffDescription &&
         <Box>

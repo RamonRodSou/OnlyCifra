@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Box, Button, Container, IconButton, TextField, Typography } from '@mui/material'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { CifraContext } from '../../ContextApi/CifraContext'
 import { ICifra, IStruct } from '../../Interface/ICifra'
 import icon from '../../assets/icon/icon-del.png'
@@ -31,7 +31,6 @@ const EditCifra = () => {
   const [singer, setSinger] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [struct, setStruct] = useState<IStruct[]>([{ section: '', content: [''] }])
-  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +74,7 @@ const EditCifra = () => {
       setData(prevData =>
         prevData.map(item => (item.id === id ? { ...updatedCifra } : item))
       )
-      navigate('/')
+      window.history.back()
     } catch (error) {
       console.error('Erro ao atualizar cifra:', error)
       alert('Erro ao atualizar a cifra. Verifique o console para mais detalhes.')
@@ -175,7 +174,7 @@ const EditCifra = () => {
           <Button type="submit" variant="contained" color="info">
             Salvar
           </Button>
-          <Button variant="contained" color="error" onClick={() => navigate('/')}>
+          <Button variant="contained" color="error" onClick={() =>  window.history.back()}>
             Cancelar
           </Button>
         </Box>

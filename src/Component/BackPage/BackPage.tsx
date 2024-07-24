@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import iconBack from '../../assets/icon/icon-back.png'
+import ReplyIcon from '@mui/icons-material/Reply';
 
 type Props = {
     icon?: boolean,
@@ -14,7 +14,7 @@ const BackPage = (props: Props) => {
     return (
 
         <Box onClick={backPage} sx={{ margin: '0 -1rem' }}>
-            {props.icon && <img src={iconBack} alt="Botão voltar para página inicial" style={{ marginRight: '0.5rem' }} />}
+            {props.icon && <ReplyIcon  />}
             {props.children}
         </Box>
     )

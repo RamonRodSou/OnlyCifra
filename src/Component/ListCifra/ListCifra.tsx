@@ -1,12 +1,12 @@
-import { useContext, useEffect } from 'react'
-import { Box, Grid, IconButton, ListItem, styled, Typography } from '@mui/material'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { Box, Grid, ListItem, styled, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
 import { CifraContext } from '../../ContextApi/CifraContext'
-import iconEdit from '../../assets/icon/icon-edit.png'
-import iconRemove from '../../assets/icon/icon-remove.png'
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import '../../_color.css'
-import { fireBaseDelete, fireBaseGet } from '../../api/FireBaseDbCifra'
+import { fireBaseAddFavorite, fireBaseGet, fireBaseRemoveFavorite } from '../../api/FireBaseDbCifra'
+import { ICifra } from '../../Interface/ICifra'
 
 const LinkCifra = styled(Link)({
   textDecoration: 'none',
@@ -40,66 +40,51 @@ const singerStyle = {
 }
 
 const ListCifra = () => {
-  const { data, setData, setSelectCifra, searchTerm } = useContext(CifraContext)
-  const navigate = useNavigate()
-
-
-  const handleEdit = (id: string) => {
-    setSelectCifra(id)
-    navigate(`/edit/${id}`)
-  }
-
-  const handleRemove = async (id: any) => {
-    const password = prompt('Por favor, insira a senha:')
-    if (password !== 'servir') {
-      alert('Senha incorreta. Tente novamente.')
-      return
-    }
-
-    try {
-      await fireBaseDelete(id)
-      window.location.reload()
-    } catch (error) {
-      console.error('Erro ao remover a cifra:', error)
-    }
-  }
+  const { data, setData, searchTerm, list, setList } = useContext(CifraContext)
 
   useEffect(() => {
     fireBaseGet(setData)
   }, [setData])
 
+  const handleFavoriteToggle = async (cifra: ICifra) => {
+    if (list.some((item) => item.id === cifra.id)) {
+      await fireBaseRemoveFavorite(cifra.id)
+      setList(list.filter((item) => item.id !== cifra.id))
+    } else {
+      await fireBaseAddFavorite(cifra)
+      setList([...list, cifra])
+    }
+  }
 
   const filteredCifras = data.filter(item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
-
-      <ListItem component="div" sx={style}>
-        {filteredCifras.length > 0 ? (
-          filteredCifras.map((item) => (
-            <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'.5rem'} width={'100%'}>
-              <LinkCifra to={`/cifras/${item.id}`}>
-                <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
-                <Typography sx={singerStyle} variant='caption'>{item.singer}</Typography>
-              </LinkCifra>
-              <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} gap={'.5rem'}> 
-                <IconButton onClick={() => handleEdit(item.id)}>
-                  <img src={iconEdit} alt='Editar cifra' />
-                </IconButton>
-                <IconButton onClick={() => handleRemove(item.id)} >
-                  <img src={iconRemove} alt='Remover cifra' />
-                </IconButton>
-              </Grid>
-            </Box>
-          ))
-        ) : (
-          <Typography variant="body1" color="textSecondary">
-            Nenhuma cifra encontrada.
-          </Typography>
-        )}
-      </ListItem>
-
+    <ListItem component="div" sx={style}>
+      {filteredCifras.length > 0 ? (
+        filteredCifras.map((item) => (
+          <Box key={item.id} display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={'.5rem'} width={'100%'}>
+            <LinkCifra to={`/cifras/${item.id}`}>
+              <Typography sx={titleStyle} variant='caption'>{item.title}</Typography>
+              <Typography sx={singerStyle} variant='caption'>{item.singer}</Typography>
+            </LinkCifra>
+            <Grid display={'flex'} alignItems={'center'} justifyContent={'flex-end'} width={'30%'} padding={'0 .5rem'}>
+              {list.some((favItem) => favItem.id === item.id) ? (
+                
+                <FavoriteIcon style={{ color: '#f44336', cursor: 'pointer' }} onClick={() => handleFavoriteToggle(item)} />
+              ) : (
+                <FavoriteBorderIcon style={{ cursor: 'pointer' }} onClick={() => handleFavoriteToggle(item)} />
+              )}
+            </Grid>
+          </Box>
+        ))
+      ) : (
+        <Typography variant="body1" color="textSecondary">
+          Nenhuma cifra encontrada.
+        </Typography>
+      )}
+    </ListItem>
   )
 }
 

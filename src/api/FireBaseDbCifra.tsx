@@ -31,17 +31,17 @@ export const fireBaseGet = async (setData: React.Dispatch<React.SetStateAction<I
 
 export const fireBaseGetById = async (id: string, setData: any) => {
   try {
-    const docRef = await firebase.firestore().collection('cifras').doc(id).get();
+    const docRef = await firebase.firestore().collection('cifras').doc(id).get()
     if (docRef.exists) {
-      const cifraData = { id: docRef.id, ...docRef.data() } as ICifra;
-      setData(cifraData);
+      const cifraData = { id: docRef.id, ...docRef.data() } as ICifra
+      setData(cifraData)
     } else {
-      console.error('Documento não encontrado.');
-      setData(null);
+      console.error('Documento não encontrado.')
+      setData(null)
     }
   } catch (error) {
-    console.error('Erro ao obter a cifra:', error);
-    alert('Erro ao obter a cifra. Verifique o console para mais detalhes.');
+    console.error('Erro ao obter a cifra:', error)
+    alert('Erro ao obter a cifra. Verifique o console para mais detalhes.')
   }
 }
 
@@ -64,5 +64,34 @@ export async function fireBaseDelete(id: string) {
     await firebase.firestore().collection('cifras').doc(id).delete()
   } catch (error) {
     alert('Erro ao deletar a cifra: ' + error)
+  }
+}
+
+
+export const fireBaseAddFavorite = async (cifra: ICifra) => {
+  try {
+    await firebase.firestore().collection('favoritos').doc(cifra.id).set(cifra)
+    console.log('Cifra adicionada aos favoritos.')
+  } catch (error) {
+    console.error('Erro ao adicionar a cifra aos favoritos:', error)
+  }
+}
+
+export const fireBaseRemoveFavorite = async (id: string) => {
+  try {
+    await firebase.firestore().collection('favoritos').doc(id).delete()
+    console.log('Cifra removida dos favoritos.')
+  } catch (error) {
+    console.error('Erro ao remover a cifra dos favoritos:', error)
+  }
+}
+
+export const fireBaseGetFavorites = async (setList: React.Dispatch<React.SetStateAction<ICifra[]>>) => {
+  try {
+    const snapshot = await firebase.firestore().collection('favoritos').get()
+    const allFavorites = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ICifra))
+    setList(allFavorites)
+  } catch (error) {
+    console.error('Erro ao obter os favoritos:', error)
   }
 }
