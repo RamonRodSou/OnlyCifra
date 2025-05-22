@@ -151,18 +151,6 @@ const Cifra = () => {
           ))}
         </ListItem>
       </Box>
-
-      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-        <Button onClick={handleDescription} style={{ 'color': 'var(--description-color)', 'padding': ' .5rem  0' }}>{descricao}</Button>
-      </Box>
-
-      {onOffDescription && (
-        <Box>
-          <Typography>
-            {cifra.description === '' ? 'Não há descrição' : cifra.description}
-          </Typography>
-        </Box>
-      )}
       <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'} marginTop="1rem">
         <IconButton 
           onClick={goToPrevious} 
@@ -186,7 +174,17 @@ const Cifra = () => {
           <ArrowForwardIcon />
         </IconButton>
       </Box>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+        <Button onClick={handleDescription} style={{ 'color': 'var(--description-color)', 'padding': ' .5rem  0' }}>{descricao}</Button>
+      </Box>
 
+      {onOffDescription && (
+        <Box>
+          <Typography>
+            {cifra.description === '' ? 'Não há descrição' : cifra.description}
+          </Typography>
+        </Box>
+      )}
     </Container>
   )
 }
