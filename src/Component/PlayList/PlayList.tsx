@@ -35,7 +35,7 @@ const singerStyleTom = {
 }
 
 const PlayList = () => {
-  const { list, setList, searchTerm } = useContext(CifraContext)
+  const { list, setList } = useContext(CifraContext)
 
   useEffect(() => {
     fireBaseGetFavorites(setList)

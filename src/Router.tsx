@@ -19,7 +19,7 @@ const Router = () => {
                     <Route path="/PlayList" element={<PlayList />} />
                     <Route path="/Escala" element={<Escala />} />
                 </Routes>
-
+                
             </BrowserRouter>
         </CifraProvider>
 
